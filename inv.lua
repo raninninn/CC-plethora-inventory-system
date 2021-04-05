@@ -13,41 +13,53 @@ local function main()
     -- Commands
     if input == "rebuild" then
         local sOut = ""
-        local b = {}
+        local count = {}
         local maxb = 1
+		local tStore = {}
         for k,chest in pairs(tChests) do
             local a = chest.list()
-                  
+
             for i=1, #a do
                 if a[i] ~= nil then
                     local id = chest.getItemMeta(i).rawName
-                    if b[id] ~= nil then
-                        b[id] = chest.getItemMeta(i).count + b[id]
+                    if tStore[id] ~= nil then
+                        tStore[id]["count"] = chest.getItemMeta(i).count + b[id]
                     else
-                        b[id] = chest.getItemMeta(i).count
+                        tStore[id]["count"] = chest.getItemMeta(i).count
+						tStore[id]["dispName"] = chest.getItemMetat(i).displayName
+						tStore[id]["chest"] = chest
+						tStore[id]["slot"] = i
                     end
                 
-                    if string.len( tostring(b[id]) ) > maxb then
-                        maxb = string.len( tostring(b[id]) )
+                    if string.len( tostring(tStore[id]["count"]) ) > maxb then
+                        maxb = string.len( tostring(tStore[id]["count"]) )
                     end
                 end
             end
-            for i=1, #a do
-                if a[i] ~= nil then
-                    local name = chest.getItemMeta(i).displayName
-                    local id = chest.getItemMeta(i).rawName
-                    local bid_len = string.len( tostring(b[id]) )
-                    
-                    local padding = ""
-                    
-                    if sOut:match(name) == nil then
-                        for j=1, maxb-bid_len do
-                            padding = padding .. " "
-                        end
-                        sOut = sOut..padding..b[id] .."  ".. name.."\n"
-                    end
-                end
-            end
+			-- Make string out of table
+			for key,value in pairs(tStore) do
+				local padding = ""
+				for j=1 , maxb - bid_len do
+					padding = padding .. " "
+				end
+				sOut = sOut..padding..tStore[key]["count"] .."  ".. tStore[key]["dispName"].."\n"
+			end
+--            for i=1, #tStore do
+  --              if a[i] ~= nil then
+    --                local name = tStore[1]
+      --              local id = chest.getItemMeta(i).rawName
+        --            local bid_len = string.len( tostring(b[id]) )
+          --          
+            --        local padding = ""
+              --      
+                --    if sOut:match(name) == nil then
+                  --      for j=1, maxb-bid_len do
+                    --        padding = padding .. " "
+                      --  end
+--                        sOut = sOut..padding..b[id] .."  ".. name.."\n"
+  --                  end
+    --            end
+       --     end
         end
         textutils.pagedPrint(sOut)
         local file = fs.open("item_catalogue", "w")
