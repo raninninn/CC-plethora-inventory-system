@@ -11,7 +11,7 @@ local function main()
     input = input:gsub("%s+", "")
     
     -- Commands
-    if input == "cat" then
+    if input == "rebuild" then
         local sOut = ""
         local b = {}
         local maxb = 1
@@ -59,6 +59,12 @@ local function main()
     if input == "ls" then
         local file = fs.open("item_catalogue", "r")
         textutils.pagedPrint(file.readAll())
+    end
+    if input == "help" then
+        print("help: prints this help message")
+        print("ls: prints out the contents of the item database")
+        print("rebuild: rebuilds the item database")
+        print("quit: quits the shell")
     end
 end
 
