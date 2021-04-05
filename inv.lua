@@ -82,7 +82,7 @@ local function main()
         print("quit: quits the shell")
     else
 		term.setTextColour( colours.red )
-		print("Unknown command")
+		print("invalid command: " .. input .. "\nTry `help` for more information.")
 		term.setTextColour( defCol )
 	end
 end
