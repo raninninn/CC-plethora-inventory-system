@@ -1,0 +1,1 @@
+Just create a [feature request]([feature request in the issues tab](https://github.com/raninninn/CC-plethora-inventory-system/issues/new?assignees=&labels=&template=feature_request.md&title=) in the issues tab and tell me that you would like to add that feature yourself.
