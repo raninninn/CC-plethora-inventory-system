@@ -8,6 +8,7 @@ local inv_dir = "/inventory/"
 
 -- Main code
 
+local w,h = term.getSize()
 local bRunning = true
 local defCol = term.getTextColour()
 -- Create working directory, if it doesn't exist
@@ -27,6 +28,12 @@ local function main()
         local count = {}
         local maxb = 1
 		local tStore = {}
+
+		-- Progress bar initialization
+		term.setCursorPos(w-1, h-1)
+		term.write("|")
+		term.setCursorPos(2, h-1)
+		term.write("|")
         for k,chest in pairs(tChests) do
             local a = chest.list()
 
@@ -57,6 +64,10 @@ local function main()
 					padding = padding .. " "
 				end
 				sOut = sOut..padding..tStore[key]["count"] .."  ".. tStore[key]["dispName"].."\n"
+			end
+			-- Progress bar
+			for i=1, math.max( (w-3)/#tChests ) do
+				term.write("#")
 			end
         end
         textutils.pagedPrint(sOut)
