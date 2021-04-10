@@ -2,6 +2,8 @@
 local chest0 = peripheral.wrap("minecraft:ironchest_iron_0")
 local chest1 = peripheral.wrap("minecraft:ironchest_copper_5")
 
+local io_drive = peripheral.wrap("drive_0")
+
 local tChests = {chest0, chest1}
 
 local inv_dir = "/inventory/"
@@ -90,8 +92,16 @@ local function main()
         print("help: prints this help message")
         print("ls: prints out the contents of the item database")
         print("rebuild: rebuilds the item database")
+		print("suck: suck the items in `io_drive` into the chests")
         print("quit: quits the shell")
-    else
+    elseif
+		input == "suck" then
+		for key, chest in pairs(tChests) do
+			for i=1, chest.size() do
+				chest.pullItems(io_drive, i)
+			end
+		end
+	else
 		term.setTextColour( colours.red )
 		print("invalid command: " .. input .. "\nTry `help` for more information.")
 		term.setTextColour( defCol )
