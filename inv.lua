@@ -2,7 +2,7 @@
 local chest0 = peripheral.wrap("minecraft:ironchest_iron_0")
 local chest1 = peripheral.wrap("minecraft:ironchest_copper_5")
 
-local io_drive = peripheral.wrap("drive_0")
+local io_drive = "drive_0"
 
 local tChests = {chest0, chest1}
 
@@ -97,7 +97,7 @@ local function main()
     elseif
 		input == "suck" then
 		for key, chest in pairs(tChests) do
-			for i=1, chest.size() do
+			for i=1, peripheral.wrap(io_drive).size() do
 				chest.pullItems(io_drive, i)
 			end
 		end
