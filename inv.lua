@@ -107,7 +107,7 @@ local function main()
 		sFile.close()
 		-- Write table to "item_table"
 		local tFile = fs.open(inv_dir .. "item_table", "w")
-		tFile.write(tStore)
+		tFile.write(textutils.serialise( tStore ))
 		tFile.flush()
 		tFile.close()
     elseif input == "quit" then
